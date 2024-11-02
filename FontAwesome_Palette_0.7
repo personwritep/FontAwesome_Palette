@@ -256,15 +256,17 @@ if(accessoryTab){
 
 
 
-let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
-let iframe_doc;
-if(editor_iframe){
-    iframe_doc=editor_iframe.contentWindow.document;
-    iframe_doc.addEventListener("keydown", menu_key_1);
-    iframe_doc.addEventListener("keyup", menu_key_2);}
-
 document.addEventListener("keydown", menu_key_1);
 document.addEventListener("keyup", menu_key_2);
+
+setTimeout(()=>{
+    let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
+    if(editor_iframe){
+        let iframe_doc=editor_iframe.contentWindow.document;
+        if(iframe_doc){
+            iframe_doc.addEventListener("keydown", menu_key_1);
+            iframe_doc.addEventListener("keyup", menu_key_2);} }
+}, 2000);
 
 
 function menu_key_1(event){
@@ -316,9 +318,9 @@ function set_aw(aw_c, n){
     let range;
     let insert_node;
 
-    editor_iframe=document.querySelector('.cke_wysiwyg_frame');
+    let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
     if(editor_iframe){
-        iframe_doc=editor_iframe.contentWindow.document;
+        let iframe_doc=editor_iframe.contentWindow.document;
         iframe_doc.body.focus(); // キャレットを表示
 
         selection=iframe_doc.getSelection();
