@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        FontAwesome Palette
 // @namespace        http://tampermonkey.net/
-// @version        0.8
+// @version        0.9
 // @description        FontAwesome絵文字の記入ツール
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventry*
@@ -72,7 +72,7 @@ function pannel(){
         '<li><i class="fa-solid fa-toggle-on"></i></li>'+
         '<li><i class="fa-solid fa-toggle-off"></i></li>'+
         '<li><i class="fa-solid fa-power-off"></i></li>'+
-        '<li><i class="fa-solid fa-mug-hot"></i></li>'+
+        '<li><i class="fa-solid fa-volume-high"></i></li>'+
         '<li><i class="fa-solid fa-utensils"></i></li>'+
         '<li><i class="fa-solid fa-mobile-screen-button"></i></li>'+
         '<li><i class="fa-solid fa-desktop"></i></li>'+
