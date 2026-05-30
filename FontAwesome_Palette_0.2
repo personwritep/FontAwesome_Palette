@@ -1,0 +1,203 @@
+// ==UserScript==
+// @name          FontAwesome Palette
+// @namespace  http://tampermonkey.net/
+// @version      0.2
+// @description  FontAwesome絵文字の記入ツール
+// @author       Ameba Blog User
+// @match        https://blog.ameba.jp/ucs/entry/srventry*
+// @exclude      https://blog.ameba.jp/ucs/entry/srventrylist.do*
+// @grant         none
+// ==/UserScript==
+
+
+
+let aw_pict=document.querySelector('#sidepanel-accessoryTab-content-pictograph > ul');
+
+if(aw_pict){
+    let aw_b=
+        '<li class="p-sideModule__subNavItem aw_button">'+
+        '<button class="p-sideModule__subNavItem__button" '+
+        'style="font-weight: bold">FAw</button></li>';
+    if(!aw_pict.querySelector('.aw_button')){
+        aw_pict.insertAdjacentHTML('afterBegin', aw_b); }
+
+    let aw_button=aw_pict.querySelector('.aw_button');
+    if(aw_button){
+        aw_button.onclick=function(event){
+            event.preventDefault();
+            main(); }}}
+
+
+
+function main(){
+    disp_subwin();
+
+    function disp_subwin(){
+        let css=
+            '.fap_menu_wrapp { position: fixed; top: 15px; left: calc(100% - 310px); '+
+            'z-index: 20; box-shadow: 20px 20px 60px 0 rgb(0 0 0 / 20%); } '+
+            '.fap_menu { '+
+            'font-family: Meiryo; font-size: 16px; line-height: 1.6; width: 276px; '+
+            'padding: 8px; border: 1px solid #009688; border-radius: 4px; '+
+            'background: #fff; box-shadow: inset 0 0 0 8px #eee; } '+
+            '.fap_title { display: flex; justify-content: space-between; align-items: center; '+
+            'padding: 4px 12px 2px; border-bottom: 8px solid #eee; '+
+            'color: #fff; font: 16px Meiryo; background: #2196f3; } '+
+            '.fap_close { display: inline-block; border: 1px solid #fff; border-radius: 2px; '+
+            'height: 19px; line-height: 21px; padding: 0 3px; margin-bottom: 1px; '+
+            'cursor: pointer; } '+
+            '.fap_close:hover { color: #2196f3; background: #fff; } '+
+            '.fap_ul { display: flex; flex-wrap: wrap; padding: 4px 0 4px 2px; } '+
+            '.fap_ul li { width: 30px; margin: 4px 2px; padding: 4px 0 0; text-align: center; '+
+            'font-size: 20px; line-height: 26px; } '+
+            '.fap_ul li:hover { cursor: pointer; outline: 1px solid #2196f3; }';
+
+        let menu_wrapp=
+            '<div class="fap_menu_wrapp"><div class="fap_menu"></div>'+
+            '<style>'+ css +'<.style></div>';
+
+        if(!document.querySelector('.fap_menu_wrapp')){
+            document.body.insertAdjacentHTML('beforeend', menu_wrapp); }
+
+        // 🟠🟠 以下のリストの行を編集・追加して、専用パネルのリストをカスタマイズできます。
+
+        let FontAwesome_list=
+            '<li><i class="fa-solid fa-arrow-rotate-right"></i></li>'+
+            '<li><i class="fa-solid fa-arrows-rotate"></i></li>'+
+            '<li><i class="fas fa-external-link-alt fa-sm"></i></li>'+
+            '<li><i class="fa-solid fa-bars"></i></li>'+
+            '<li><i class="fa-solid fa-gear"></i> </li>'+
+            '<li><i class="fa-solid fa-house"></i></li>'+
+            '<li><i class="fa-solid fa-magnifying-glass"></i></li>'+
+            '<li><i class="fa-solid fa-circle-info"></i></li>'+
+
+            '<li><i class="fa-solid fa-pen"></i></li>'+
+            '<li><i class="fa-solid fa-pen-to-square"></i></li>'+
+            '<li><i class="fa-regular fa-circle-question"></i></li>'+
+            '<li><i class="fa-solid fa-circle-question"></i></li>'+
+
+            '<li><i class="fa-solid fa-tag"></i> </li>'+
+            '<li><i class="fa-solid fa-palette"></i></li>'+
+            '<li><i class="fa-solid fa-chart-simple"></i></li>'+
+            '<li><i class="fa-solid fa-user"></i> </li>'+
+
+            '<li><i class="fa-solid fa-circle-user"></i></li>'+
+            '<li><i class="fa-brands fa-facebook"></i> </li>'+
+            '<li><i class="fa-brands fa-twitter"></i> </li>'+
+            '<li><i class="fa-brands fa-instagram"></i> </li>'+
+            '<li><i class="fa-brands fa-github"></i> </li>'+
+            '<li><i class="fa-brands fa-wordpress"></i></li>'+
+            '<li><i class="fa-brands fa-apple"></i> </li>'+
+            '<li><i class="fa-brands fa-youtube"></i></li>'+
+
+            '<li><i class="fa-solid fa-music"></i> </li>'+
+            '<li><i class="fa-solid fa-circle-xmark"></i></li>'+
+            '<li><i class="fa-regular fa-circle-xmark"></i></li>'+
+            '<li><i class="fa-solid fa-paperclip"></i></li>'+
+            '<li><i class="fa-solid fa-file"></i></li>'+
+            '<li><i class="fa-regular fa-file"></i></li>'+
+            '<li><i class="fa-regular fa-copy"></i></li>'+
+            '<li><i class="fa-regular fa-folder-open"></i></li>'+
+
+            '<li><i class="fa-solid fa-mug-hot"></i></li>'+
+            '<li><i class="fa-solid fa-lock"></i> </li>'+
+            '<li><i class="fa-solid fa-unlock"></i> </li>'+
+            '<li><i class="fa-solid fa-camera"></i></li>'+
+            '<li><i class="fa-solid fa-video"></i></li>'+
+            '<li><i class="fa-brands fa-amazon"></i></li>'+
+            '<li><i class="fa-brands fa-cc-amazon-pay"></i></li>'+
+            '<li><i class="fa-solid fa-triangle-exclamation"></i></li>'+
+
+            '<li><i class="fa-solid fa-share-from-square"></i></li>'+
+            '<li><i class="fa-solid fa-wifi"></i></li>'+
+            '<li><i class="fa-brands fa-line"></i></li>'+
+            '<li><i class="fa-solid fa-street-view"></i></li>'+
+            '<li><i class="fa-solid fa-expand"></i></li>'+
+            '<li><i class="fa-solid fa-compress"></i></li>'+
+            '<li><i class="fa-solid fa-toggle-on"></i></li>'+
+            '<li><i class="fa-solid fa-toggle-off"></i></li>'+
+
+            '<li><i class="fa-solid fa-power-off"></i></li>'+
+            '<li><i class="fa-solid fa-microphone"></i></li>'+
+            '<li><i class="fa-solid fa-thumbtack"></i></li>'+
+            '<li><i class="fa-regular fa-face-smile"></i></li>'+
+            '<li><i class="fa-solid fa-utensils"></i></li>';
+
+
+        let menu=document.querySelector('.fap_menu');
+        if(menu){
+            let menu_str=
+                '<div class="fap_title">'+
+                '<b>FontAwesome　</b>'+
+                '貼付：Click　　　　'+
+                '<span class="fap_close">✖</span>'+
+                '</div>'+
+                '<div>'+
+                '<ul class="fap_ul">'+
+                FontAwesome_list +
+                '</ul>'+
+                '</div>';
+
+            menu.innerHTML=menu_str; }
+
+    } // disp_subwin()
+
+
+
+    let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
+    let iframe_doc;
+    if(editor_iframe){
+        iframe_doc=editor_iframe.contentWindow.document;
+        iframe_doc.addEventListener("keydown", menu_key_1); }
+
+    let fap_menu_wrapp=document.querySelector('.fap_menu_wrapp');
+    document.addEventListener("keydown", menu_key_1);
+
+    function menu_key_1(event){
+        if(event.keyCode==27 && fap_menu_wrapp){ //「Esc」
+            event.preventDefault();
+            fap_menu_wrapp.remove(); }}
+
+    let fap_close=document.querySelector('.fap_close');
+    if(fap_close){
+        fap_close.onclick=function(event){
+            event.preventDefault();
+            fap_menu_wrapp.remove(); }}
+
+
+
+    let aw_li=document.querySelectorAll('.fap_ul li');
+    for(let k=0; k<aw_li.length; k++){
+        let aw_class=aw_li[k].querySelector('i').className;
+        aw_li[k].addEventListener("click", function(){
+            set_aw(aw_class); }); }
+
+
+    function set_aw(aw_c){
+        let selection;
+        let range;
+        let insert_node;
+
+        editor_iframe=document.querySelector('.cke_wysiwyg_frame');
+        if(editor_iframe){
+            iframe_doc=editor_iframe.contentWindow.document;
+            iframe_doc.body.focus(); // キャレットを表示
+
+            selection=iframe_doc.getSelection();
+            range=selection.getRangeAt(0);
+
+            let insert_node_b=iframe_doc.createTextNode('\u00A0');
+            range.insertNode(insert_node_b);
+            range.setStartAfter(insert_node_b);
+
+            insert_node=iframe_doc.createElement('i');
+            insert_node.appendChild(iframe_doc.createTextNode('\u0020'));
+            insert_node.setAttribute('class', aw_c);
+            range.insertNode(insert_node);
+
+            let insert_node_a=iframe_doc.createTextNode('\u00A0');
+            insert_node.parentNode.insertBefore(insert_node_a, insert_node.nextSibling);
+            range.setStartAfter(insert_node_a);
+            range.collapse(); }}
+
+} // main()
