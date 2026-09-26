@@ -1,19 +1,58 @@
 // ==UserScript==
 // @name        FontAwesome Palette
 // @namespace        http://tampermonkey.net/
-// @version        1.0
+// @version        1.1
 // @description        FontAwesome絵文字の記入ツール
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
 // @match        https://blog.ameba.jp/ucs/entry/srventryupdateinput.do*
 // @icon        https://www.google.com/s2/favicons?sz=64&domain=ameblo.jp
 // @grant        none
+// @run-at        document-idle
 // @updateURL        https://github.com/personwritep/FontAwesome_Palette/raw/main/FontAwesome_Palette.user.js
 // @downloadURL        https://github.com/personwritep/FontAwesome_Palette/raw/main/FontAwesome_Palette.user.js
 // ==/UserScript==
 
 
+let FontAwesomeURL=
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css';
+
+
+fa_environ();
 pannel();
+
+
+function fa_environ(){
+    setTimeout(()=>{
+        let outer_style=document.querySelector('.outer_asa');
+        if(!outer_style){
+            let outer_style_text=
+                '<style class="outer_asa">'+
+                '@import url("'+ FontAwesomeURL +'");</style>';
+
+            document.documentElement.insertAdjacentHTML('beforeend', outer_style_text); }
+    }, 600);
+
+
+    setTimeout(()=>{
+        let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
+        if(editor_iframe){ // iframe読込みが実行条件
+            let iframe_doc=editor_iframe.contentWindow.document;
+            if(iframe_doc){
+                let iframe_body=iframe_doc.querySelector('body.cke_editable');
+                if(iframe_body){
+                    let style_text=
+                        '<style class="asa">'+
+                        '@import url("'+ FontAwesomeURL +'");</style>';
+
+                    if(iframe_body.querySelector('.asa')){
+                        iframe_body.querySelector('.asa').remove(); } // 既に書込まれていたら削除して更新
+                    iframe_body.insertAdjacentHTML('beforeend', style_text); }}} // 記事末尾に style.asaを追加
+    }, 1200);
+
+} // fa_environ()
+
+
 
 function pannel(){
 
