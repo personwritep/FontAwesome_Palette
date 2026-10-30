@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        FontAwesome Palette
 // @namespace        http://tampermonkey.net/
-// @version        1.1
+// @version        1.2
 // @description        FontAwesome絵文字の記入ツール
 // @author        Ameba Blog User
 // @match        https://blog.ameba.jp/ucs/entry/srventryinsertinput.do*
@@ -301,14 +301,28 @@ if(accessoryTab){
 document.addEventListener("keydown", menu_key_1);
 document.addEventListener("keyup", menu_key_2);
 
-setTimeout(()=>{
+
+let target=document.getElementById('cke_1_contents'); // 監視 target
+let monitor=new MutationObserver(catch_key);
+monitor.observe(target, {childList: true}); // ショートカット待受け開始
+
+catch_key();
+
+function catch_key(){
     let editor_iframe=document.querySelector('.cke_wysiwyg_frame');
-    if(editor_iframe){
+    if(editor_iframe){ // iframe読込みが実行条件
         let iframe_doc=editor_iframe.contentWindow.document;
         if(iframe_doc){
-            iframe_doc.addEventListener("keydown", menu_key_1);
-            iframe_doc.addEventListener("keyup", menu_key_2);} }
-}, 2000);
+            let iframe_body=iframe_doc.body;
+            if(iframe_body && !iframe_body.hasAttribute('listener_fap')){
+                iframe_body.addEventListener("keydown", menu_key_1);
+                iframe_body.addEventListener("keyup", menu_key_2);
+                iframe_body.setAttribute('listener_fap', 'true');
+
+            }}} // if(editor_iframe)
+
+} // catch_key()
+
 
 
 function menu_key_1(event){
@@ -344,15 +358,15 @@ if(fap_close){
         hide_pannel(); }}
 
 
-
-let aw_li=document.querySelectorAll('.fap_ul li:not(.fap_category)');
-for(let k=0; k<aw_li.length; k++){
-    let aw_class=aw_li[k].querySelector('i').className;
-    aw_li[k].addEventListener("click", function(event){
-        if(event.shiftKey){
-            set_aw(aw_class, 1); }
-        else{
-            set_aw(aw_class, 0); }}); }
+let fap_ul=document.querySelector('.fap_ul');
+if(fap_ul){
+    fap_ul.addEventListener("click", function(event){
+        if(event.target.tagName==='I'){
+            let aw_class=event.target.className;
+            if(event.shiftKey){
+                set_aw(aw_class, 1); }
+            else{
+                set_aw(aw_class, 0); }}}); }
 
 
 function set_aw(aw_c, n){
