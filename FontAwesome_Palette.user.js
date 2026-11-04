@@ -14,6 +14,8 @@
 // ==/UserScript==
 
 
+let listen=Symbol();
+
 let FontAwesomeURL=
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css';
 
@@ -297,7 +299,6 @@ if(accessoryTab){
             disp_pannel(); }}}
 
 
-
 document.addEventListener("keydown", menu_key_1);
 document.addEventListener("keyup", menu_key_2);
 
@@ -313,13 +314,12 @@ function catch_key(){
     if(editor_iframe){ // iframe読込みが実行条件
         let iframe_doc=editor_iframe.contentWindow.document;
         if(iframe_doc){
-            let iframe_body=iframe_doc.body;
-            if(iframe_body && !iframe_body.hasAttribute('listener_fap')){
-                iframe_body.addEventListener("keydown", menu_key_1);
-                iframe_body.addEventListener("keyup", menu_key_2);
-                iframe_body.setAttribute('listener_fap', 'true');
+            if(!iframe_doc[listen]){
+                iframe_doc.addEventListener("keydown", menu_key_1);
+                iframe_doc.addEventListener("keyup", menu_key_2);
+                iframe_doc[listen]=true; }
 
-            }}} // if(editor_iframe)
+        }} // if(editor_iframe)
 
 } // catch_key()
 
